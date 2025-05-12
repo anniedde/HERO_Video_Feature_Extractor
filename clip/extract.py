@@ -9,8 +9,10 @@ from random_sequence_shuffler import RandomSequenceSampler
 import torch.nn.functional as F
 from tqdm import tqdm
 import os
-import clip
-
+#import clip
+import sys
+sys.path.append('/playpen-nas-ssd4/awang/UniVTG')
+from run_on_video import clip
 
 parser = argparse.ArgumentParser(description='Easy video feature extractor')
 
@@ -55,7 +57,7 @@ loader = DataLoader(
     sampler=sampler if n_dataset > 10 else None,
 )
 preprocess = Preprocessing()
-model, _ = clip.load(args.model_version, device="cuda")
+model, _ = clip.load(args.model_version, device="cuda", jit=False)
 
 totatl_num_frames = 0
 with th.no_grad():
@@ -86,6 +88,7 @@ with th.no_grad():
                     features[min_ind:max_ind] = batch_features
                 features = features.cpu().numpy()
                 if args.half_precision:
+                    assert False, 'should not be true'
                     features = features.astype('float16')
                 totatl_num_frames += features.shape[0]
                 # safeguard output path before saving

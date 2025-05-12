@@ -34,6 +34,7 @@ def main(opts):
                         fileList.append(input_file)
 
         for input_filename in fileList:
+            print(input_filename)
             filename = os.path.basename(input_filename)
             fileId, _ = os.path.splitext(filename)
 
@@ -52,7 +53,7 @@ if __name__ == '__main__':
     parser.add_argument("--feature_path", default="/output/clip-vit_features",
                         type=str, help="output feature path.")
     parser.add_argument(
-        '--csv_folder', type=str, default="/output/csv",
+        '--csv_folder', type=str, default="./output/csv",
         help='output csv folder')
     parser.add_argument(
         '--corrupted_id_file', type=str, default="",
